@@ -1,0 +1,5 @@
+/volume
+.vscode
+.terraform
+terraform.tfstate
+.terraform.lock.hcl
