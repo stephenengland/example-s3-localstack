@@ -10,3 +10,10 @@ tflocal apply
 # You may need to login first due to how our AWS SSO works.
 # aws sso login
 awslocal s3 ls
+
+
+# visit http://mysecretfiles.s3-website.localhost.localstack.cloud:4566/ in your browser
+
+awslocal s3 cp copy-me-index.html s3://mysecretfiles/index.html
+
+# visit http://mysecretfiles.s3-website.localhost.localstack.cloud:4566/ in your browser
