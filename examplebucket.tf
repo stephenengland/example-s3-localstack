@@ -1,9 +1,9 @@
-resource "aws_s3_bucket" "mysecretfiles" {
-  bucket = "mysecretfiles"
+resource "aws_s3_bucket" "examplebucket" {
+  bucket = "examplebucket"
 }
 
-resource "aws_s3_bucket_website_configuration" "mysecretfiles" {
-  bucket = aws_s3_bucket.mysecretfiles.id
+resource "aws_s3_bucket_website_configuration" "examplebucket" {
+  bucket = aws_s3_bucket.examplebucket.id
 
   index_document {
     suffix = "index.html"
@@ -14,13 +14,13 @@ resource "aws_s3_bucket_website_configuration" "mysecretfiles" {
   }
 }
 
-resource "aws_s3_bucket_acl" "mysecretfiles" {
-  bucket = aws_s3_bucket.mysecretfiles.id
+resource "aws_s3_bucket_acl" "examplebucket" {
+  bucket = aws_s3_bucket.examplebucket.id
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_policy" "mysecretfiles" {
-  bucket = aws_s3_bucket.mysecretfiles.id
+resource "aws_s3_bucket_policy" "examplebucket" {
+  bucket = aws_s3_bucket.examplebucket.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -31,8 +31,8 @@ resource "aws_s3_bucket_policy" "mysecretfiles" {
         Principal = "*"
         Action    = "s3:GetObject"
         Resource = [
-          aws_s3_bucket.mysecretfiles.arn,
-          "${aws_s3_bucket.mysecretfiles.arn}/*",
+          aws_s3_bucket.examplebucket.arn,
+          "${aws_s3_bucket.examplebucket.arn}/*",
         ]
       },
     ]
@@ -41,10 +41,10 @@ resource "aws_s3_bucket_policy" "mysecretfiles" {
 
 # Note: index.html is intentionally manual to demo the aws s3 CLI.
 # This demos copying files using Terraform
-resource "aws_s3_object" "object_www" {
-  depends_on   = [aws_s3_bucket.mysecretfiles]
+resource "aws_s3_object" "examplebucketfiles" {
+  depends_on   = [aws_s3_bucket.examplebucket]
   for_each     = fileset("${path.root}", "bucket-files/*.html")
-  bucket       = "mysecretfiles"
+  bucket       = "examplebucket"
   key          = basename(each.value)
   source       = each.value
   etag         = filemd5("${each.value}")

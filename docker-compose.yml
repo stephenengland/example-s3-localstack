@@ -12,3 +12,15 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - s3demo
+  flask:
+    container_name: flaskdemo
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - s3demo
+networks:
+  s3demo:
+    name: s3demo
