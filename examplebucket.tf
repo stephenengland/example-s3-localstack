@@ -14,11 +14,6 @@ resource "aws_s3_bucket_website_configuration" "examplebucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "examplebucket" {
-  bucket = aws_s3_bucket.examplebucket.id
-  acl    = "public-read"
-}
-
 resource "aws_s3_bucket_policy" "examplebucket" {
   bucket = aws_s3_bucket.examplebucket.id
 
